@@ -8,7 +8,7 @@ import OptionsGrid from "../components/game/OptionsGrid";
 import { generateQuestion } from "../utils/mathEngine";
 
 const TOTAL_TIME = 30;
-const extraTime = 2;
+const extraTime = localStorage.getItem("bonusTimeSeconds");
 
 const Game = () => {
   const [searchParams] = useSearchParams();
@@ -108,6 +108,7 @@ const Game = () => {
       <div className="px-4">
         <QuestionCard
           question={question}
+          extraTime={extraTime}
           isWrong={isProcessing && selectedOption !== question.answer}
           isRight={isProcessing && selectedOption === question.answer}
         />

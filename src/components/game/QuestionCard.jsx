@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "../common/Card";
 
-const QuestionCard = ({ question, isWrong,isRight }) => {
+const QuestionCard = ({ question, isWrong,isRight,extraTime }) => {
   return (
     <Card className="text-center mb-8 py-12 relative overflow-hidden">
       
@@ -16,7 +16,7 @@ const QuestionCard = ({ question, isWrong,isRight }) => {
       {isRight && (
         <div className="absolute inset-0 bg-green-500 flex items-center justify-center rounded-2xl z-10">
           <span className="text-white font-black text-5xl">
-             +5
+             {`+${extraTime}`}
           </span>
         </div>
       )}

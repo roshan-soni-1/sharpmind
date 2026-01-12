@@ -52,7 +52,10 @@ const Home = () => {
         <div className="flex justify-between items-center">
           <Greeting/>
           
-          <Settings className="w-8 h-8 text-white/80 cursor-pointer" />
+          <Settings className="w-8 h-8 text-black cursor-pointer"
+          onClick={() => { navigate("/settings") }
+          }
+          />
         </div>
       </div>
 
