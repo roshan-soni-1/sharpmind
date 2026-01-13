@@ -30,8 +30,11 @@ const TimerBar = ({ timeLeft, totalTime = 30}) => {
         />
       </div>
 
-      <div className="text-center font-bold text-white mt-1 text-sm transition-transform duration-300"
-           style={{ transform: percentage < 20 ? "scale(1.1)" : "scale(1)" }}>
+      <div
+        className={`text-center font-bold text-white mt-1 text-sm transition-transform duration-300 ${
+          percentage < 90 ? "scale-300 text-red-100" : "scale-100"
+        }`}
+      >
         {timeLeft}s
       </div>
     </div>
