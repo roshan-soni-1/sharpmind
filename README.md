@@ -35,7 +35,7 @@
 
 ## 📖 About The Project
 
-**Mind Calculation** is a modern, responsive web application designed to gamify mental math. Users race against the clock to solve arithmetic problems, with a focus on improving speed and accuracy. The app features a beautiful, distraction-free UI that adapts to your system preferences.
+**Sharpmind** is a modern, responsive web application designed to gamify mental math. Users race against the clock to solve arithmetic problems, with a focus on improving speed and accuracy. The app features a beautiful, distraction-free UI that adapts to your system preferences.
 
 ---
 
@@ -137,7 +137,7 @@ Contributions are what make the open-source community such an amazing place to l
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
-
+>This file is ai generated
 <div align="center">
   <p>Developed with ❤️ by <strong>Roshan Soni</strong></p>
 </div>
