@@ -24,7 +24,7 @@ const Greeting = () => {
         <h1 className="text-3xl font-bold">
           Hi {storedName} 👋
         </h1>
-        <p className="text-blue-700 font-medium">
+        <p className="text-gray-400 font-medium">
           Welcome back to Mind Calculation
         </p>
       </div>

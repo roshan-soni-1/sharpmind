@@ -1,9 +1,13 @@
-import React from 'react';
+import React from "react";
 
 const Layout = ({ children }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary-light via-blue-400 to-white font-sans text-gray-800">
-      <div className="max-w-md mx-auto min-h-screen shadow-2xl bg-gray-50 overflow-hidden relative">
+    <div className="
+    min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300
+    ">
+      <div className="
+        max-w-md mx-auto min-h-screen bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 shadow-xl overflow-hidden
+      ">
         {children}
       </div>
     </div>

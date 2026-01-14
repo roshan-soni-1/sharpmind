@@ -9,37 +9,46 @@ import { generateQuestion } from "../utils/mathEngine";
 
 const TOTAL_TIME = 30;
 
-
-const Game = ({bonusTime}) => {
+const Game = ({ bonusTime }) => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [extraTime, setextraTime] = useState(1);
+  
+  // Game Configuration
   const mode = searchParams.get("mode") || "plus";
   const difficulty = searchParams.get("difficulty") || "basic";
+  const [currentBonus, setCurrentBonus] = useState(1);
 
+  // Game State
   const [question, setQuestion] = useState(null);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
-  const [gameState, setGameState] = useState("playing");
-
+  const [gameState, setGameState] = useState("playing"); // 
+  
+  // Interaction State
   const [selectedOption, setSelectedOption] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  
+  const [showBonusAnim, setShowBonusAnim] = useState(false);
+
   useEffect(() => {
-    const bonus = parseInt(localStorage.getItem("bonusTimeSeconds"), 10) || 1;
-    setextraTime(bonusTime);
+    const savedBonus = localStorage.getItem("bonusTimeSeconds");
+    setCurrentBonus(savedBonus ? Number(savedBonus) : (bonusTime || 1));
   }, [bonusTime]);
   
+  // Initial Question
   useEffect(() => {
     setQuestion(generateQuestion(mode, difficulty));
   }, [mode, difficulty]);
 
+  // Timer Logic
   useEffect(() => {
     if (gameState !== "playing") return;
-    if (timeLeft <= 0) return setGameState("finished");
+    if (timeLeft <= 0) {
+      setGameState("finished");
+      return;
+    }
 
     const timer = setInterval(() => {
-      setTimeLeft(t => t - 1);
+      setTimeLeft((t) => Math.max(0, t - 1));
     }, 1000);
 
     return () => clearInterval(timer);
@@ -51,21 +60,25 @@ const Game = ({bonusTime}) => {
     setIsProcessing(true);
     setSelectedOption(option);
     
-    {/* if answer is correct */}
+    // CORRECT ANSWER
     if (option === question.answer) {
+      // Trigger Bonus Animation
+      setShowBonusAnim(true);
+      setTimeout(() => setShowBonusAnim(false), 800);
+
       setTimeout(() => {
-        {/* if answer is correct add 5 seconds to timer*/}
-        setScore(s => s + 1);
+        setScore((s) => s + 1);
+        setTimeLeft((t) => Math.min(t + currentBonus, TOTAL_TIME));
         
-        setTimeLeft(t => Math.min(t + extraTime , TOTAL_TIME));
-        
-        
+        // Reset for next round
         setSelectedOption(null);
         setIsProcessing(false);
         setQuestion(generateQuestion(mode, difficulty));
-      }, 500);
-    } else {
-      setTimeout(() => setGameState("finished"), 1500);
+      }, 400); 
+    } 
+    // WRONG ANSWER
+    else {
+      setTimeout(() => setGameState("finished"), 1000);
     }
   };
 
@@ -82,7 +95,7 @@ const Game = ({bonusTime}) => {
     if (!isProcessing) return "option";
     if (opt === question.answer) return "correct";
     if (opt === selectedOption) return "wrong";
-    return "option";
+    return "option"; 
   };
 
   if (gameState === "finished") {
@@ -97,38 +110,49 @@ const Game = ({bonusTime}) => {
     );
   }
 
-  if (!question) {
-    return <Layout><div className="p-10 text-center">Loading...</div></Layout>;
-  }
+  if (!question) return <Layout><div className="flex h-screen items-center justify-center text-slate-500">Preparing Math...</div></Layout>;
 
   return (
     <Layout>
-      <GameHeader
-        timeLeft={timeLeft}
-        totalTime={TOTAL_TIME}
-        score={score}
-        showPoint={isProcessing && selectedOption === question.answer}
-      />
 
-      <div className="px-4">
-        <QuestionCard
-          question={question}
-          extraTime={extraTime}
-          isWrong={isProcessing && selectedOption !== question.answer}
-          isRight={isProcessing && selectedOption === question.answer}
+      {showBonusAnim && (
+        <div className="fixed top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none animate-bounce-custom">
+          <span className="text-4xl font-black text-green-500 drop-shadow-lg">+{currentBonus}s</span>
+        </div>
+      )}
+
+      <div className="flex flex-col h-full px-4 pt-4 pb-6 max-w-md mx-auto">
+        <GameHeader
+          timeLeft={timeLeft}
+          totalTime={TOTAL_TIME}
+          score={score}
         />
 
-        <h3 className="text-center text-primary-dark font-bold text-xl mb-6">
-          {isProcessing && selectedOption !== question.answer
-            ? "Game Over..."
-            : "Pick your Answer"}
-        </h3>
+        <div className="flex-1 flex flex-col justify-center gap-6 my-4">
+          <QuestionCard
+            question={question}
+            isWrong={isProcessing && selectedOption !== question.answer}
+          />
+          
+          <div className="mt-2">
+            <h3 className={`text-center font-bold text-lg mb-4 transition-colors duration-300 ${
+              isProcessing 
+                ? (selectedOption === question.answer ? "text-green-500" : "text-red-500") 
+                : "text-slate-400 dark:text-slate-500"
+            }`}>
+              {isProcessing 
+                ? (selectedOption === question.answer ? "Correct!" : "Game Over!") 
+                : "Select the correct answer"}
+            </h3>
 
-        <OptionsGrid
-          options={question.options}
-          onSelect={handleAnswer}
-          getVariant={getVariant}
-        />
+            <OptionsGrid
+              options={question.options}
+              onSelect={handleAnswer}
+              getVariant={getVariant}
+              disabled={isProcessing}
+            />
+          </div>
+        </div>
       </div>
     </Layout>
   );
