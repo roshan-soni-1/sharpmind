@@ -8,12 +8,12 @@ import OptionsGrid from "../components/game/OptionsGrid";
 import { generateQuestion } from "../utils/mathEngine";
 
 const TOTAL_TIME = 30;
-const extraTime = localStorage.getItem("bonusTimeSeconds");
 
-const Game = () => {
+
+const Game = ({bonusTime}) => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-
+  const [extraTime, setextraTime] = useState(1);
   const mode = searchParams.get("mode") || "plus";
   const difficulty = searchParams.get("difficulty") || "basic";
 
@@ -24,7 +24,12 @@ const Game = () => {
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
-
+  
+  useEffect(() => {
+    const bonus = parseInt(localStorage.getItem("bonusTimeSeconds"), 10) || 1;
+    setextraTime(bonusTime);
+  }, [bonusTime]);
+  
   useEffect(() => {
     setQuestion(generateQuestion(mode, difficulty));
   }, [mode, difficulty]);
