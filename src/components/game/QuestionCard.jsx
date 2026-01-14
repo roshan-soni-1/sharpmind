@@ -16,7 +16,7 @@ const QuestionCard = ({ question, isWrong,isRight,extraTime }) => {
       {isRight && (
         <div className="absolute inset-0 bg-green-500 flex items-center justify-center rounded-2xl z-10">
           <span className="text-white font-black text-5xl">
-             {`+${extraTime}`}
+             {`+${extraTime || 5}`}
           </span>
         </div>
       )}

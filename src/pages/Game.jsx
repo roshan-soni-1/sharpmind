@@ -8,7 +8,7 @@ import OptionsGrid from "../components/game/OptionsGrid";
 import { generateQuestion } from "../utils/mathEngine";
 
 const TOTAL_TIME = 30;
-const extraTime = localStorage.getItem("bonusTimeSeconds");
+const extraTime = localStorage.getItem("bonusTimeSeconds") || 1;
 
 const Game = () => {
   const [searchParams] = useSearchParams();
