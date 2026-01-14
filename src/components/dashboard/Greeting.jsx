@@ -17,10 +17,9 @@ const Greeting = () => {
     if (e.key === "Enter") handleSave();
   };
 
-  // --- View: User is Logged In ---
   if (storedName) {
     return (
-      <div className="text-slate-800 dark:text-white mb-6">
+      <div className="text-slate-800 dark:text-white mb-6 pt-10">
         <h1 className="text-3xl font-black flex items-center gap-2">
           Hi, {storedName} <span className="animate-wave">👋</span>
         </h1>

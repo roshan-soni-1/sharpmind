@@ -4,19 +4,26 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="manifest" href="/site.webmanifest">
     
-    
     <script>
-      // fix flashing screen before theme load
       (function() {
         const theme = localStorage.getItem('theme');
+        const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     
         if (theme === 'dark') {
           document.documentElement.classList.add('dark');
+          metaThemeColor.setAttribute('content', '#0f172a');
+        } else 
+        {
+          document.documentElement.classList.remove('dark');
+          metaThemeColor.setAttribute('content', '#ffffff');
         }
       })();
     </script>
+    
+
     <title>sharpmind</title>
   </head>
   <body>
