@@ -12,15 +12,20 @@ function App() {
 
   useEffect(() => {
     const html = document.documentElement;
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
 
     if (theme === "dark") {
       html.classList.add("dark");
+      // Change status bar to Dark
+      metaThemeColor.setAttribute("content", "#0f172a");
     } else {
       html.classList.remove("dark");
+      metaThemeColor.setAttribute("content", "#ffffff");
     }
 
     localStorage.setItem("theme", theme);
-  }, [theme]); // 🔥 MUST depend on theme
+  }, [theme]);
+
 
   return (
     <Router>
