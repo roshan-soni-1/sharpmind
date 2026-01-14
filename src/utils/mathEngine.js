@@ -1,4 +1,3 @@
-//Generate a random integer between min and max (inclusive)
 export const getRandomInt = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -15,7 +14,6 @@ const buildOptions = (answer, difficulty) => {
   let attempts = 0;
   const maxAttempts = 100;
 
-  // Generate unique, positive options
   while (options.size < 4 && attempts < maxAttempts) {
     attempts++;
     const deviation = getRandomInt(-range, range);
