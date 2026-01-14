@@ -1,57 +1,71 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from "react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 const Greeting = () => {
-  const [name, setName] = useState('');
-  const [storedName, setStoredName] = useState(null);
-
-  useEffect(() => {
-    const savedName = localStorage.getItem('userName');
-    if (savedName) {
-      setStoredName(savedName);
-    }
-  }, []);
+  const [name, setName] = useState("");
+  const [storedName, setStoredName] = useState(() => {
+    return localStorage.getItem("userName");
+  });
 
   const handleSave = () => {
     if (!name.trim()) return;
-    localStorage.setItem('userName', name.trim());
+    localStorage.setItem("userName", name.trim());
     setStoredName(name.trim());
   };
 
-// if username already exist
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleSave();
+  };
+
+  // --- View: User is Logged In ---
   if (storedName) {
     return (
-      <div className="text-primary-dark">
-        <h1 className="text-3xl font-bold">
-          Hi {storedName} 👋
+      <div className="text-slate-800 dark:text-white mb-6">
+        <h1 className="text-3xl font-black flex items-center gap-2">
+          Hi, {storedName} <span className="animate-wave">👋</span>
         </h1>
-        <p className="text-gray-400 font-medium">
-          Welcome back to Mind Calculation
+        <p className="text-slate-500 dark:text-slate-400 font-medium">
+          Ready to train your brain?
         </p>
       </div>
     );
   }
 
-  // First time user
+  //First Time User
   return (
-    <div className="bg-white/70 p-6 rounded-2xl shadow-md max-w-sm">
-      <h2 className="text-xl font-bold text-primary-dark mb-2">
-        Hey 👋 What’s your name?
+    <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/20 dark:border-slate-700 max-w-sm w-full mx-auto">
+      <div className="flex justify-center mb-4">
+        <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-full text-blue-600 dark:text-blue-400">
+          <Sparkles size={24} />
+        </div>
+      </div>
+
+      <h2 className="text-xl font-bold text-slate-800 dark:text-white text-center mb-2">
+        Welcome!
       </h2>
+      <p className="text-slate-500 dark:text-slate-400 text-center text-sm mb-6">
+        What should we call you?
+      </p>
 
-      <input
-        type="text"
-        placeholder="Enter your name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        className="w-full px-4 py-2 rounded-lg border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
-      />
-
-      <button
-        onClick={handleSave}
-        className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
-      >
-        Let’s Go 
-      </button>
+      <div className="relative group">
+        <input
+          autoFocus
+          type="text"
+          placeholder="Enter your name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          onKeyDown={handleKeyDown}
+          className="w-full pl-4 pr-12 py-3 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all font-semibold"
+        />
+        
+        <button
+          onClick={handleSave}
+          disabled={!name.trim()}
+          className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-all disabled:opacity-0 disabled:scale-75"
+        >
+          <ArrowRight size={18} />
+        </button>
+      </div>
     </div>
   );
 };
