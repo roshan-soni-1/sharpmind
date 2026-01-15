@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Game from "./pages/Game";
 import Settings from "./pages/Settings";
+import About from "./pages/About"
 
 function App() {
   const [bonusTime, setBonusTime] = useState(1);
@@ -31,6 +32,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
         <Route path="/game" element={<Game bonusTime={bonusTime} />} />
         <Route
           path="/settings"
