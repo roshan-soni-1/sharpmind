@@ -1,25 +1,11 @@
 @import "tailwindcss";
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-2px); }
-  75% { transform: translateX(2px); }
-}
 
-.animate-shake {
-  animation: shake 0.3s infinite;
-}
+/* ⚠️ CRITICAL: This restores your Dark Mode functionality */
 @variant dark (&:where(.dark, .dark *));
 
-@keyframes floatUpFade {
-  0% { transform: translateY(0) scale(1); opacity: 1; }
-  100% { transform: translateY(-20px) scale(1.2); opacity: 0; }
-}
+/* --- ANIMATIONS --- */
 
-.animate-bounce-custom {
-  animation: floatUpFade 0.6s ease-out forwards;
-}
-
-/* Shake Animation for Wrong Answer */
+/* 1. SHAKE (For wrong answers) */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   20% { transform: translateX(-8px); }
@@ -32,28 +18,7 @@
   animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
 }
 
-/* Bounce/Float for Bonus Time */
-@keyframes floatUp {
-  0% { transform: translateY(10px) scale(0.8); opacity: 0; }
-  50% { transform: translateY(0px) scale(1.1); opacity: 1; }
-  100% { transform: translateY(-10px) scale(1); opacity: 1; }
-}
-
-.animate-bounce-custom {
-  animation: floatUp 0.3s ease-out forwards;
-}
-
-/* Fade In for Overlays */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.1s ease-out forwards;
-}
-
-
+/* 2. BOUNCE/FLOAT (For success/bonus) */
 @keyframes floatUpFade {
   0% { transform: translateY(20px) scale(0.5); opacity: 0; }
   60% { transform: translateY(-5px) scale(1.1); opacity: 1; }
@@ -62,9 +27,9 @@
 
 .animate-bounce-custom {
   animation: floatUpFade 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  opacity: 0; /* Start hidden before animation runs */
 }
 
+/* 3. FADE IN (For page loads) */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -74,3 +39,20 @@
     animation: fadeIn 0.2s ease-out forwards;
 }
 
+/* 4. UTILITIES */
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.animate-wave {
+  animation: wave 2s infinite;
+  display: inline-block;
+  transform-origin: 70% 70%;
+}

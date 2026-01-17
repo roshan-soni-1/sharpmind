@@ -2,39 +2,89 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#ffffff" />
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XEELYV0ZTG"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-XEELYV0ZTG');
-</script>
-    <link rel="manifest" href="/site.webmanifest">
-    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Theme Color -->
+    <meta name="theme-color" content="#ffffff" />
+
+    <title>SharpMind – Fast Mental Math Game</title>
+    <meta
+      name="description"
+      content="SharpMind is a fast and fun mental math game to improve calculation speed, focus, and brain performance. Train your mind daily!"
+    />
+    <meta
+      name="keywords"
+      content="mental math game, brain training, math speed test, calculation practice, mind game"
+    />
+    <meta name="author" content="Roshan Soni" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="SharpMind – Fast Mental Math Game" />
+    <meta
+      property="og:description"
+      content="Play SharpMind to boost your mental calculation speed and sharpen your brain with fun challenges."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sharpmind-sigma.vercel.app/" />
+    <meta
+      property="og:image"
+      content="https://sharpmind-sigma.vercel.app/og-image.png"
+    />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SharpMind – Fast Mental Math Game" />
+    <meta
+      name="twitter:description"
+      content="Train your brain with quick math challenges. Improve speed, accuracy, and focus."
+    />
+    <meta
+      name="twitter:image"
+      content="https://sharpmind-sigma.vercel.app/og-image.png"
+    />
+
+    <!-- PWA -->
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Theme bootstrap (runs BEFORE React) -->
     <script>
-      (function() {
-        const theme = localStorage.getItem('theme');
-        const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-    
-        if (theme === 'dark') {
-          document.documentElement.classList.add('dark');
-          metaThemeColor.setAttribute('content', '#0f172a');
-        } else 
-        {
-          document.documentElement.classList.remove('dark');
-          metaThemeColor.setAttribute('content', '#ffffff');
+      (function () {
+        const theme = localStorage.getItem("theme");
+        const metaThemeColor = document.querySelector(
+          'meta[name="theme-color"]'
+        );
+
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+          metaThemeColor.setAttribute("content", "#0f172a");
+        } else {
+          document.documentElement.classList.remove("dark");
+          metaThemeColor.setAttribute("content", "#ffffff");
         }
       })();
     </script>
-    
 
-    <title>sharpmind</title>
+    <!-- Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-XEELYV0ZTG"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-XEELYV0ZTG");
+    </script>
   </head>
+
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
