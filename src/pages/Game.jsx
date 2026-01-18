@@ -22,7 +22,7 @@ const Game = ({ bonusTime }) => {
   const [question, setQuestion] = useState(null);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
-  const [gameState, setGameState] = useState("playing"); // 
+  const [gameState, setGameState] = useState("playing"); 
   
   // Interaction State
   const [selectedOption, setSelectedOption] = useState(null);
@@ -110,32 +110,47 @@ const Game = ({ bonusTime }) => {
     );
   }
 
-  if (!question) return <Layout><div className="flex h-screen items-center justify-center text-slate-500">Preparing Math...</div></Layout>;
+  if (!question) return (
+    <Layout>
+      <div className="flex h-[80vh] items-center justify-center text-slate-500 font-medium text-lg animate-pulse">
+        Preparing Math...
+      </div>
+    </Layout>
+  );
 
   return (
     <Layout>
-
+      {/* Floating Bonus Animation - Centered on viewport */}
       {showBonusAnim && (
-        <div className="fixed top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none animate-bounce-custom">
-          <span className="text-4xl font-black text-green-500 drop-shadow-lg">+{currentBonus}s</span>
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none animate-bounce-custom">
+          <span className="text-5xl md:text-7xl font-black text-green-500 drop-shadow-2xl">+{currentBonus}s</span>
         </div>
       )}
 
-      <div className="flex flex-col h-full px-4 pt-4 pb-6 max-w-md mx-auto">
-        <GameHeader
-          timeLeft={timeLeft}
-          totalTime={TOTAL_TIME}
-          score={score}
-        />
+      {/* RESPONSIVE CONTAINER:
+        - Mobile: w-full (default)
+        - Desktop: max-w-3xl (wider), centered (mx-auto), vertically centered (min-h-[85vh])
+      */}
+      <div className="flex flex-col w-full max-w-md md:max-w-2xl lg:max-w-3xl mx-auto h-full min-h-[85vh] py-4 md:py-8 justify-between md:justify-center relative">
+        
+        {/* Header Section */}
+        <div className="mb-6 md:mb-10 w-full">
+          <GameHeader
+            timeLeft={timeLeft}
+            totalTime={TOTAL_TIME}
+            score={score}
+          />
+        </div>
 
-        <div className="flex-1 flex flex-col justify-center gap-6 my-4">
+        {/* Game Body */}
+        <div className="flex-1 flex flex-col justify-center gap-6 md:gap-12 w-full">
           <QuestionCard
             question={question}
             isWrong={isProcessing && selectedOption !== question.answer}
           />
           
-          <div className="mt-2">
-            <h3 className={`text-center font-bold text-lg mb-4 transition-colors duration-300 ${
+          <div className="mt-2 md:mt-6 w-full">
+            <h3 className={`text-center font-bold text-lg md:text-2xl mb-4 md:mb-8 transition-colors duration-300 ${
               isProcessing 
                 ? (selectedOption === question.answer ? "text-green-500" : "text-red-500") 
                 : "text-slate-400 dark:text-slate-500"
