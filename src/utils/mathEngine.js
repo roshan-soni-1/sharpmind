@@ -35,8 +35,7 @@ const buildOptions = (answer, difficulty) => {
   return Array.from(options).sort(() => Math.random() - 0.5);
 };
 
-/**
- * Get number ranges based on difficulty
+/** Get number ranges based on difficulty
  */
 const getDifficultyRanges = (difficulty) => {
   const ranges = {
@@ -48,9 +47,8 @@ const getDifficultyRanges = (difficulty) => {
   return ranges[difficulty] || ranges.basic;
 };
 
-/**
- * Generate addition question
- */
+
+ // Generate addition question
 const generateAddition = (min, max) => {
   const num1 = getRandomInt(min, max);
   const num2 = getRandomInt(min, max);
@@ -60,9 +58,7 @@ const generateAddition = (min, max) => {
   return { display, answer };
 };
 
-/**
- * Generate subtraction question
- */
+// Generate subtraction question
 const generateSubtraction = (min, max) => {
   let num1 = getRandomInt(min, max);
   let num2 = getRandomInt(min, max);
@@ -78,11 +74,10 @@ const generateSubtraction = (min, max) => {
   return { display, answer };
 };
 
-/**
- * Generate multiplication question
- */
+// Generate multiplication question
 const generateMultiplication = (difficulty) => {
-  // Normal mode → simple a × b
+  // Normal mode
+  //if (difficulty !== 'mid') {
   if (difficulty !== 'mid') {
     const num1 = getRandomInt(5, 15);
     const num2 = getRandomInt(5, 12);
@@ -92,6 +87,7 @@ const generateMultiplication = (difficulty) => {
       answer: num1 * num2
     };
   }
+  console.log("medium level")
 
 
   const a = getRandomInt(5, 10);
@@ -159,12 +155,6 @@ const generateBracket = (difficulty) => {
   return patterns[getRandomInt(0, patterns.length - 1)];
 };
 
-/**
- * Main Question Generator
- * @param {string} mode - Operation mode: 'plus', 'minus', 'multiply', 'divide', 'bracket', 'mix'
- * @param {string} difficulty - Difficulty level: 'basic', 'mid', 'advance'
- * @returns {Object} Question object with display, answer, and options
- */
 export const generateQuestion = (mode, difficulty = 'basic') => {
   let display, answer;
   const { min, max } = getDifficultyRanges(difficulty);

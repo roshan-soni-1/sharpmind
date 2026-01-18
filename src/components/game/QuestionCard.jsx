@@ -1,23 +1,32 @@
-import React from "react";
+import React, {memo} from "react";
 import { Check, X } from "lucide-react";
 
 const QuestionCard = ({ question, isWrong, isRight, extraTime }) => {
   let num1 = question.num1;
   let operator = question.operator;
   let num2 = question.num2;
-
+  let operator2 = null;
+  let num3 = question.num3;
+  
+  // console.log(question);
   if ((!num1 || !operator) && question.display) {
-    const parts = question.display.split(' '); 
-    if (parts.length >= 3) {
-      num1 = parts[0];
-      operator = parts[1];
-      num2 = parts[2];
-    }
+      const parts = question.display.split(' '); 
+      
+      if (parts.length >= 3) {
+        num1 = parts[0];
+        operator = parts[1];
+        num2 = parts[2];
+      }
+  
+      if (parts.length >= 5) {
+        operator2 = parts[3]; 
+        num3 = parts[4];
+      }
   }
 
   const getOperatorSymbol = (op) => {
     switch (op) {
-      case "*": case "x": return "×";
+      case "*": case "x": case "×": return "×";
       case "/": return "÷";
       case "plus": case "+": return "+";
       case "minus": case "-": return "-";
@@ -39,19 +48,17 @@ const QuestionCard = ({ question, isWrong, isRight, extraTime }) => {
       overflow-hidden
     `}>
       
-      {/* Background Decorations - Subtler sizing */}
       <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-blue-50 dark:bg-blue-900/20 rounded-bl-full opacity-50 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-20 h-20 md:w-24 md:h-24 bg-purple-50 dark:bg-purple-900/20 rounded-tr-full opacity-50 pointer-events-none" />
 
-      {/* Content - FIXED: Reduced padding (py-8) and text sizes (text-5xl/6xl) */}
-      <div className="relative z-10 py-8 md:py-12 px-4 flex items-center justify-center gap-3 sm:gap-6 flex-wrap">
+      <div className="relative z-10 py-8 md:py-12 px-4 flex items-center justify-center gap-2 sm:gap-4 md:gap-6 flex-wrap">
         
         {/* Number 1 */}
         <span className="text-5xl md:text-6xl font-black text-slate-800 dark:text-white tracking-tight">
           {num1 || "?"}
         </span>
 
-        {/* Operator */}
+        {/* Operator 1 */}
         <span className="text-4xl md:text-5xl font-bold text-blue-500 dark:text-blue-400">
           {getOperatorSymbol(operator || "?")}
         </span>
@@ -61,12 +68,24 @@ const QuestionCard = ({ question, isWrong, isRight, extraTime }) => {
           {num2 || "?"}
         </span>
 
+        {/* Optional: Operator 2 & Number 3 */}
+        {num3 && (
+          <>
+            <span className="text-4xl md:text-5xl font-bold text-blue-500 dark:text-blue-400">
+              {getOperatorSymbol(operator2 || operator)}
+            </span>
+            <span className="text-5xl md:text-6xl font-black text-slate-800 dark:text-white tracking-tight">
+              {num3}
+            </span>
+          </>
+        )}
+
         {/* Equals Sign */}
         <span className="text-4xl md:text-5xl font-bold text-slate-300 dark:text-slate-600">
           =
         </span>
         
-        {/* Answer Box - FIXED: Reduced to w-24 on desktop */}
+        {/* Answer Box */}
         <div className={`
           w-16 h-16 md:w-24 md:h-24
           rounded-2xl
@@ -86,7 +105,6 @@ const QuestionCard = ({ question, isWrong, isRight, extraTime }) => {
         </div>
       </div>
 
-      {/* Success Overlay */}
       {isRight && (
         <div className="absolute inset-0 bg-emerald-500/10 backdrop-blur-[2px] flex items-center justify-center z-20 animate-fade-in">
           <div className="flex flex-col items-center">
@@ -97,7 +115,6 @@ const QuestionCard = ({ question, isWrong, isRight, extraTime }) => {
         </div>
       )}
 
-      {/* Wrong Overlay */}
       {isWrong && (
         <div className="absolute inset-0 bg-rose-500/90 backdrop-blur-md flex items-center justify-center z-20 animate-fade-in">
           <div className="text-center text-white">
@@ -111,4 +128,4 @@ const QuestionCard = ({ question, isWrong, isRight, extraTime }) => {
   );
 };
 
-export default QuestionCard;
+export default memo(QuestionCard);

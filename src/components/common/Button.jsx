@@ -31,8 +31,6 @@ const Button = ({
       p-2 md:p-3 active:scale-95 rounded-full
     `,
 
-    // Option Buttons (The Game Answers)
-    // FIXED: Reduced desktop padding (md:py-5) so they are sizeable but not huge
     option: `
       bg-white dark:bg-slate-800 
       text-slate-700 dark:text-slate-200 
