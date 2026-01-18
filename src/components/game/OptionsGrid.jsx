@@ -1,9 +1,9 @@
-import React from "react";
+import React,{memo} from "react";
 import Button from "../common/Button";
 
-const OptionsGrid = ({ options, onSelect, getVariant, disabled }) => {
+const OptionsGrid = ({ options, onSelect, disabled,getVariant }) => {
+  // console.log("rendering");
   return (
-    // FIXED: gap-4 md:gap-5 (Tightened up the grid)
     <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 w-full pb-6">
       {options.map((opt, i) => (
         <Button
@@ -11,7 +11,6 @@ const OptionsGrid = ({ options, onSelect, getVariant, disabled }) => {
           variant={getVariant(opt)}
           disabled={disabled}
           onClick={() => !disabled && onSelect(opt)}
-          // FIXED: Reduced text size (text-2xl -> md:text-3xl)
           className={`
             text-2xl sm:text-3xl md:text-4xl font-mono font-bold 
             transition-all duration-200 w-full
@@ -25,4 +24,4 @@ const OptionsGrid = ({ options, onSelect, getVariant, disabled }) => {
   );
 };
 
-export default OptionsGrid;
+export default memo(OptionsGrid);
